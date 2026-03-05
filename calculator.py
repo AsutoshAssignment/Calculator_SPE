@@ -19,7 +19,29 @@ class Calculator:
             raise ValueError("Error! Division by zero.")
         return a / b
 
+    @staticmethod
+    def power(base, exponent):
+        return math.pow(base, exponent)
 
+    @staticmethod
+    def square_root(num):
+        if num < 0:
+            raise ValueError("Error! Square root of a negative number.")
+        return math.sqrt(num)
+
+    @staticmethod
+    def logarithm(num):
+        if num <= 0:
+            raise ValueError("Error! Logarithm of zero or negative number.")
+        return math.log(num)
+
+    @staticmethod
+    def factorial(num):
+        if num < 0:
+            raise ValueError("Error! Factorial of a negative number.")
+        if not float(num).is_integer():
+             raise ValueError("Error! Factorial of non-integer.")
+        return float(math.factorial(int(num)))
 
 if __name__ == "__main__":
     while True:
