@@ -16,17 +16,25 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'python3 -m pip install -r requirements.txt'
-            }
-        }
-        stage('Test the Project') {
-            steps {
-                sh 'python3 -m pytest test_calculator.py'
-            }
-        }
 
+        stage('Install Dependencies') {
+    steps {
+        sh '''
+        python3 -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+        '''
+    }
+}
+
+stage('Test the Project') {
+    steps {
+        sh '''
+        source venv/bin/activate
+        pytest
+        '''
+    }
+}
         stage('Debug Docker') {
             steps {
                 sh 'echo PATH=$PATH'
