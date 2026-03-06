@@ -65,6 +65,44 @@ stage('Test the Project') {
             }
         }
 
-        
+
+post {
+
+    success {
+        emailext(
+            subject: "SUCCESS: Jenkins Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """
+            Build Status: SUCCESS
+
+            Job Name: ${env.JOB_NAME}
+            Build Number: ${env.BUILD_NUMBER}
+            Build URL: ${env.BUILD_URL}
+
+            Docker Image Pushed: ${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest
+            """,
+            to: "your-email@gmail.com",
+            attachLog: true
+        )
+    }
+
+    failure {
+        emailext(
+            subject: "FAILED: Jenkins Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """
+            Build Status: FAILED
+
+            Job Name: ${env.JOB_NAME}
+            Build Number: ${env.BUILD_NUMBER}
+
+            Check console output:
+            ${env.BUILD_URL}
+            """,
+            to: "your-email@gmail.com",
+            attachLog: true
+        )
+    }
+
+    }
+
     }
 }
