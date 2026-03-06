@@ -98,7 +98,7 @@ post {
             Check console output:
             ${env.BUILD_URL}
             """,
-            to: "your-email@gmail.com",
+            to: "asutosh.panda.264@gmail.com",
             attachLog: true
         )
     }
