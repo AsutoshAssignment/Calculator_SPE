@@ -9,7 +9,7 @@
   tasks:
     - name: Pull the latest Docker Hub image
       community.docker.docker_image:
-        name: "{{ lookup('env', 'DOCKER_HUB_USERNAME') }}/scientific-calculator"
+        name: "asutoshassignment/scientific-calculator"
         tag: latest
         source: pull
 
@@ -21,7 +21,7 @@
     - name: Run the newly built container
       community.docker.docker_container:
         name: scientific-calculator-app
-        image: "{{ lookup('env', 'DOCKER_HUB_USERNAME') }}/scientific-calculator:latest"
+        image: "asutoshassignment/scientific-calculator:latest"
         state: started
         restart_policy: unless-stopped
         interactive: yes

@@ -4,6 +4,8 @@ pipeline {
         DOCKER_IMAGE_NAME = 'scientific-calculator'
         GITHUB_REPO_URL = 'https://github.com/AsutoshAssignment/Calculator_SPE.git'
         DOCKER_HUB_USERNAME = 'asutoshassignment'
+        LANG = 'en_US.UTF-8'
+        LC_ALL = 'en_US.UTF-8'
     }
 
     stages {
