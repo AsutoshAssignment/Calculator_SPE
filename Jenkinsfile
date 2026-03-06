@@ -64,6 +64,7 @@ stage('Test the Project') {
                 }
             }
         }
+        }
 
 
 post {
@@ -105,4 +106,4 @@ post {
     }
 
     }
-}
+
