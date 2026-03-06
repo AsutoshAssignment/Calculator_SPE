@@ -65,41 +65,11 @@ pipeline {
         }
     }
 
-    post {
-
-        success {
-            emailext(
-                subject: "SUCCESS: Jenkins Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-                Build Status: SUCCESS
-
-                Job Name: ${env.JOB_NAME}
-                Build Number: ${env.BUILD_NUMBER}
-                Build URL: ${env.BUILD_URL}
-
-                Docker Image Pushed: ${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest
-                """,
-                to: "asutosh.panda.264@gmail.com",
-                attachLog: true
-            )
-        }
-
-        failure {
-            emailext(
-                subject: "FAILED: Jenkins Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-                Build Status: FAILED
-
-                Job Name: ${env.JOB_NAME}
-                Build Number: ${env.BUILD_NUMBER}
-
-                Check console output:
-                ${env.BUILD_URL}
-                """,
-                to: "asutosh.panda.264@gmail.com",
-                attachLog: true
-            )
-        }
-
+post {
+    always {
+        mail to: 'asutosh.panda.264@gmail.com',
+        subject: "Build ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+        body: "Build details: ${env.BUILD_URL}"
     }
+}
 }
