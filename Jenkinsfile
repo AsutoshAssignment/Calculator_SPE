@@ -55,6 +55,13 @@ stage('Test the Project') {
                 }
             }
         }
+        stage('Deploy with Ansible') {
+            steps {
+                script {
+                    sh 'ansible-playbook -i inventory deploy.yml'
+                }
+            }
+        }
 
         
     }
