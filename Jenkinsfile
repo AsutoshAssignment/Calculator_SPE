@@ -18,27 +18,25 @@ pipeline {
             }
         }
 
-
         stage('Install Dependencies') {
-    steps {
-        sh '''
-        python3 -m venv venv
-        source venv/bin/activate
-        pip install -r requirements.txt
-        '''
-    }
-}
+            steps {
+                sh '''
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install -r requirements.txt
+                '''
+            }
+        }
 
-stage('Test the Project') {
-    steps {
-        sh '''
-        source venv/bin/activate
-        pytest
-        '''
-    }
-}
+        stage('Test the Project') {
+            steps {
+                sh '''
+                source venv/bin/activate
+                pytest
+                '''
+            }
+        }
 
-        
         stage('Build Docker Image') {
             steps {
                 script {
@@ -57,6 +55,7 @@ stage('Test the Project') {
                 }
             }
         }
+
         stage('Deploy with Ansible') {
             steps {
                 script {
@@ -64,46 +63,43 @@ stage('Test the Project') {
                 }
             }
         }
+    }
+
+    post {
+
+        success {
+            emailext(
+                subject: "SUCCESS: Jenkins Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                Build Status: SUCCESS
+
+                Job Name: ${env.JOB_NAME}
+                Build Number: ${env.BUILD_NUMBER}
+                Build URL: ${env.BUILD_URL}
+
+                Docker Image Pushed: ${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest
+                """,
+                to: "asutosh.panda.264@gmail.com",
+                attachLog: true
+            )
         }
 
+        failure {
+            emailext(
+                subject: "FAILED: Jenkins Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                Build Status: FAILED
 
-post {
+                Job Name: ${env.JOB_NAME}
+                Build Number: ${env.BUILD_NUMBER}
 
-    success {
-        emailext(
-            subject: "SUCCESS: Jenkins Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: """
-            Build Status: SUCCESS
-
-            Job Name: ${env.JOB_NAME}
-            Build Number: ${env.BUILD_NUMBER}
-            Build URL: ${env.BUILD_URL}
-
-            Docker Image Pushed: ${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest
-            """,
-            to: "asutosh.panda.264@gmail.com",
-            attachLog: true
-        )
-    }
-
-    failure {
-        emailext(
-            subject: "FAILED: Jenkins Build ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: """
-            Build Status: FAILED
-
-            Job Name: ${env.JOB_NAME}
-            Build Number: ${env.BUILD_NUMBER}
-
-            Check console output:
-            ${env.BUILD_URL}
-            """,
-            to: "asutosh.panda.264@gmail.com",
-            attachLog: true
-        )
-    }
+                Check console output:
+                ${env.BUILD_URL}
+                """,
+                to: "asutosh.panda.264@gmail.com",
+                attachLog: true
+            )
+        }
 
     }
-
-    }
-
+}
