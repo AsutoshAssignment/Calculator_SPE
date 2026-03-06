@@ -81,7 +81,7 @@ post {
 
             Docker Image Pushed: ${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest
             """,
-            to: "your-email@gmail.com",
+            to: "asutosh.panda.264@gmail.com",
             attachLog: true
         )
     }
