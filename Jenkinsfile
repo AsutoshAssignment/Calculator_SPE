@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_IMAGE_NAME = 'scientific-calculator'
         GITHUB_REPO_URL = 'https://github.com/AsutoshAssignment/Calculator_SPE.git'
-        DOCKER_HUB_USERNAME = 'atrocks'
+        DOCKER_HUB_USERNAME = 'AsutoshAssignment'
     }
 
     stages {
